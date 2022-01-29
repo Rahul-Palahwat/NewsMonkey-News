@@ -3,94 +3,40 @@ import NewsItem from "./NewsItem";
 
 export class News extends Component {
 
-    articles=[
-        {
-            "source": {
-                "id": "bbc-sport",
-                "name": "BBC Sport"
-            },
-            "author": "BBC Sport",
-            "title": "Australia Women v England Women - Cricket - BBC Sport",
-            "description": "Find out the in depth batting and bowling figures for Australia Women v England Women in the Women's International Test Match Series on BBC Sport.",
-            "url": "https://www.bbc.co.uk/sport/cricket/scorecard/ECKO51135",
-            "urlToImage": "https:////m.files.bbci.co.uk/modules/bbc-morph-sport-seo-meta/1.22.0/images/bbc-sport-logo.png",
-            "publishedAt": "2022-01-28T23:07:24.704972Z",
-            "content": "<table><tr><th>Batter</th><th>How Out</th><th>Bowler</th><th>Runs</th><th>Balls</th><th>4s</th><th>6s</th><th>Mins</th><th>SR</th></tr>\r\n<tr><th>Total</th><th>(104.1 overs)</th><th>337-for9wickets de… [+5725 chars]"
-        },
-        {
-            "source": {
-                "id": "talksport",
-                "name": "TalkSport"
-            },
-            "author": "Josh Fordham",
-            "title": "Ash Barty drawing inspiration from Evonne Goolagong, once quit tennis to play professional cricket, now...",
-            "description": "Rahul fdd sdsfdsf gfgfdbfdvsdf fsfrgfdf qwewr etr tuytr uyt ufdsf dsgdrhr tutr hyt uytu hj hj u try fgh fgdh df gdfg dfg dfgdfgf ghdt hgdf h ",
-            "url": "https://talksport.com/sport/tennis/1029218/ash-barty-evonne-goolagong-tennis-cricket-australian-open/",
-            "urlToImage": "https://talksport.com/wp-content/uploads/sites/5/2022/01/TALKSPORT-Barty.jpg?strip=all&quality=100&w=1200&h=800&crop=1",
-            "publishedAt": "2022-01-28T22:30:00Z",
-            "content": "Ash Barty is already an Australian national treasure, but is chasing her own slice of history in Melbourne on Saturday.\r\nThe world number one has steam rolled her way to the final without dropping a … [+4596 chars]"
-        },
-        {
-            "source": {
-                "id": "bbc-sport",
-                "name": "BBC Sport"
-            },
-            "author": "BBC Sport",
-            "title": "Zimbabwe's Taylor banned after admission",
-            "description": "Former Zimbabwe skipper Brendan Taylor is banned from cricket for more than three years after admitting charges related to drug use and a match-fixing approach.",
-            "url": "http://www.bbc.co.uk/sport/cricket/60170236",
-            "urlToImage": "https://ichef.bbci.co.uk/live-experience/cps/624/cpsprodpb/170CE/production/_123041449_taylor_getty.jpg",
-            "publishedAt": "2022-01-28T15:22:23.9787291Z",
-            "content": "Taylor failed a drugs test during his final one-day international series - against Ireland in September\r\nFormer Zimbabwe skipper Brendan Taylor has been banned from cricket for three and a half years… [+1504 chars]"
-        },
-        {
-            "source": {
-                "id": "espn-cric-info",
-                "name": "ESPN Cric Info"
-            },
-            "author": null,
-            "title": "PCB hands Umar Akmal three-year ban from all cricket | ESPNcricinfo.com",
-            "description": "Penalty after the batsman pleaded guilty to not reporting corrupt approaches | ESPNcricinfo.com",
-            "url": "http://www.espncricinfo.com/story/_/id/29103103/pcb-hands-umar-akmal-three-year-ban-all-cricket",
-            "urlToImage": "https://a4.espncdn.com/combiner/i?img=%2Fi%2Fcricket%2Fcricinfo%2F1099495_800x450.jpg",
-            "publishedAt": "2020-04-27T11:41:47Z",
-            "content": "Umar Akmal's troubled cricket career has hit its biggest roadblock yet, with the PCB handing him a ban from all representative cricket for three years after he pleaded guilty of failing to report det… [+1506 chars]"
-        },
-        {
-            "source": {
-                "id": "espn-cric-info",
-                "name": "ESPN Cric Info"
-            },
-            "author": null,
-            "title": "What we learned from watching the 1992 World Cup final in full again | ESPNcricinfo.com",
-            "description": "Wides, lbw calls, swing - plenty of things were different in white-ball cricket back then | ESPNcricinfo.com",
-            "url": "http://www.espncricinfo.com/story/_/id/28970907/learned-watching-1992-world-cup-final-full-again",
-            "urlToImage": "https://a4.espncdn.com/combiner/i?img=%2Fi%2Fcricket%2Fcricinfo%2F1219926_1296x729.jpg",
-            "publishedAt": "2020-03-30T15:26:05Z",
-            "content": "Last week, we at ESPNcricinfo did something we have been thinking of doing for eight years now: pretend-live ball-by-ball commentary for a classic cricket match. We knew the result, yes, but we tried… [+6823 chars]"
-        }
-    ]
+    
 
     constructor(){
         super();
         console.log("Hello I am a constructor from news component");
         this.state={
-            articles: this.articles,
+            articles: [],
             loading: false
         }
+    }
+
+    // to fetch data from news api 
+    // and yen render ka baad run hoga 
+    // async and await yha pr promise return hone ka intazzar krenge 
+    async componentDidMount(){
+        console.log("componentDidMount");
+        let url="https://newsapi.org/v2/top-headlines?country=in&apiKey=a2b8a3da6dad40c78083bcd6c04a4443";
+        let data=await fetch(url);
+        let parsedData= await data.json();
+        console.log(parsedData);
+        this.setState({articles: parsedData.articles})
     }
 
 
   render() {
     return (
       <div className="container my-3">
-        <h2>NewMonkey - Top Headlines</h2>
+        <h1>NewMonkey - Top Headlines</h1>
         
         <div className="row">
         {this.state.articles.map((element)=>{
             // console.log(element);
             return <div className="col-md-4"  key={element.url}>
-            <NewsItem title={element.title.slice(0,45)} description={element.description.slice(0,88)} imageUrl={element.urlToImage} newsUrl={element.url}/>
+            <NewsItem title={element.title?element.title:""} description={element.description?element.description:""} imageUrl={element.urlToImage} newsUrl={element.url}/>
             </div>
         })}
             
