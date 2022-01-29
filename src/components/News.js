@@ -24,7 +24,7 @@ export class News extends Component {
             },
             "author": "Josh Fordham",
             "title": "Ash Barty drawing inspiration from Evonne Goolagong, once quit tennis to play professional cricket, now...",
-            "description": "",
+            "description": "Rahul fdd sdsfdsf gfgfdbfdvsdf fsfrgfdf qwewr etr tuytr uyt ufdsf dsgdrhr tutr hyt uytu hj hj u try fgh fgdh df gdfg dfg dfgdfgf ghdt hgdf h ",
             "url": "https://talksport.com/sport/tennis/1029218/ash-barty-evonne-goolagong-tennis-cricket-australian-open/",
             "urlToImage": "https://talksport.com/wp-content/uploads/sites/5/2022/01/TALKSPORT-Barty.jpg?strip=all&quality=100&w=1200&h=800&crop=1",
             "publishedAt": "2022-01-28T22:30:00Z",
@@ -85,16 +85,16 @@ export class News extends Component {
     return (
       <div className="container my-3">
         <h2>NewMonkey - Top Headlines</h2>
+        
         <div className="row">
-            <div className="col-md-4">
-            <NewsItem title="myTitle" description="My desc" imageUrl="https://a4.espncdn.com/combiner/i?img=%2Fi%2Fcricket%2Fcricinfo%2F1219926_1296x729.jpg" newsUrl="To Do"/>
+        {this.state.articles.map((element)=>{
+            // console.log(element);
+            return <div className="col-md-4"  key={element.url}>
+            <NewsItem title={element.title.slice(0,45)} description={element.description.slice(0,88)} imageUrl={element.urlToImage} newsUrl={element.url}/>
             </div>
-            <div className="col-md-4">
-            <NewsItem title="myTitle" description="My desc" />
-            </div>
-            <div className="col-md-4">
-            <NewsItem title="myTitle" description="My desc" />
-            </div>
+        })}
+            
+            
           
         </div>
 
