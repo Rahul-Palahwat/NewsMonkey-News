@@ -18,14 +18,19 @@ export class News extends Component {
       category: PropTypes.string
     }
 
-    constructor(){
-        super();
+    capitalFirstLetter=(string)=>{
+      return string.charAt(0).toUpperCase()+string.slice(1);
+    }
+
+    constructor(props){
+        super(props);
         console.log("Hello I am a constructor from news component");
         this.state={
             articles: [],
             loading: false,
             page:1
         }
+        document.title=`NewsMonkey - ${this.capitalFirstLetter(this.props.category)}`;
     }
 
     // this is to remove al the extra lines of code from next prev and mount functions 
@@ -65,7 +70,7 @@ export class News extends Component {
   render() {
     return (
       <div className="container my-3">
-        <h1 className="text-center" style={{margin: '35px 0px'}}>NewMonkey - Top Headlines</h1>
+        <h1 className="text-center" style={{margin: '35px 0px'}}>NewMonkey - Top {this.capitalFirstLetter(this.props.category)} Headlines</h1>
         {this.state.loading && <Spinner/>}
         <div className="row">
         {!this.state.loading && this.state.articles.map((element)=>{
