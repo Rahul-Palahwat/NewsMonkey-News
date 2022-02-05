@@ -11,7 +11,7 @@ const News = (props)=>{
   const[loading, setLoading] = useState(true)
   const[page, setPage] = useState(1)
   const[totalResults, setTotalResults] = useState(0)
-  // document.title=`NewsMonkey - ${this.capitalFirstLetter(props.category)}`;
+  
   
 
     const capitalFirstLetter=(string)=>{
@@ -46,12 +46,14 @@ const News = (props)=>{
     // }
     // hooks ka use componentDidMount ki jgh 
     useEffect(()=>{
+      document.title=`NewsMonkey - ${capitalFirstLetter(props.category)}`;
       updateNews();
     }, [])
 
     const fetchMoreData = async () => {
+      
+      const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pagesize=${props.pageSize}`;
       setPage(page+1);
-      const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pagesize=${props.pageSize}`;
         
         let data=await fetch(url);
         let parsedData= await data.json();
@@ -75,7 +77,7 @@ const News = (props)=>{
 
     return (
       <>
-        <h1 className="text-center" style={{margin: '35px 0px'}}>NewMonkey - Top {capitalFirstLetter(props.category)} Headlines</h1>
+        <h1 className="text-center" style={{margin: '35px 0px' , marginTop: '90px'}}>NewMonkey - Top {capitalFirstLetter(props.category)} Headlines</h1>
         {loading && <Spinner/>}
         <InfiniteScroll
           dataLength={articles.length}
